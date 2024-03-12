@@ -6,8 +6,8 @@ const saltRounds = 12;
 const createNewUser = (req, res) => {
   let id = randomStringGenerator(12);
   const { email, username, password } = req.body;
-  console.log(req.body);
-  console.log(password);
+  // console.log(req.body);
+  // console.log(password);
   bcrypt.genSalt(saltRounds, function (err, salt) {
     bcrypt.hash(password, salt, function (err, hash) {
       if (err) {
@@ -30,25 +30,29 @@ const createNewUser = (req, res) => {
 
 const getUserLogin = (req, res) => {
   const { username, password } = req.body;
-
   User.find({ username: username }).then((user) => {
-    const hash = user[0].password;
+    if (user.length == 0) {
+      res.status(404).send();
+    } else {
+      const hash = user[0].password;
+      // console.log(hash);
 
-    bcrypt.compare(password, hash, function (err, result) {
-      if (err) {
-        res.status(400).send("Internal server error.");
-      } else {
-        if (result === false) {
-          res.status(401).send("Unauthorized response");
+      bcrypt.compare(password, hash, function (err, result) {
+        if (err) {
+          res.status(400).send("Internal server error.");
         } else {
-          console.log("login verified");
-          res.send({
-            username: user[0].username,
-            userId: user[0].userId,
-          });
+          if (result === false) {
+            res.status(401).send("Unauthorized response");
+          } else {
+            console.log("login verified");
+            res.send({
+              username: user[0].username,
+              userId: user[0].userId,
+            });
+          }
         }
-      }
-    });
+      });
+    }
   });
 };
 

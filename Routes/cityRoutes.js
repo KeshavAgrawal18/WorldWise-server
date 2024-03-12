@@ -9,9 +9,9 @@ import authenticationMiddleware from "../middlewares/authenticationMiddlewares.j
 
 const router = express.Router();
 
-router.get("/cities", getAllCities);
+router.get("/cities/userId/:userId", getAllCities);
 
-router.get("/cities/:id", getCityById);
+router.get("/cities/userId/:userId/id/:id", getCityById);
 
 router.post("/newCity", authenticationMiddleware, createNewCity);
 
