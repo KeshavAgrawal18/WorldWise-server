@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-const PORT = 8000;
+const PORT = process.env.PORT;
 
 mongooseConnect();
 
