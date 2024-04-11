@@ -27,4 +27,4 @@ jobs:
       - name: Pull image from docker hub
         run: docker pull keshavagrawal18/worldwise-server:latest
       - name: Run Docker Container
-        run: docker run -d -p 8000:8000 --name nodejs-app-container -e MONGO_URL='${{ secrets.MONGO_URL}}' keshavagrawal18/worldwise-server
+        run: docker run -d -p 8000:8000 --name node-app-container -e MONGO_URL='${{ secrets.MONGO_URL}}' keshavagrawal18/worldwise-server
