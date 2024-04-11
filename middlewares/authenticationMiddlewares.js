@@ -1,6 +1,6 @@
 const authenticationMiddleware = (req, res, next) => {
   const authorizationReceived = req.headers.authorization;
-  const authenticationCode = process.env.AUTHENTICATION_CODE;
+  const authenticationCode = "authenticationcode_secret";
   if (authorizationReceived !== authenticationCode) {
     console.log("Unauthorized access");
     res.status(401).json({ message: "Unauthorized access" });

@@ -1,0 +1,27 @@
+name: Deploy Node Application
+
+on:
+  push:
+    branches: ["main"]
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout Source
+          uses: actionS/checkout@v4
+        - name: Login to docker hub
+          run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        - name: Build Docker image
+          run: docker build -t keshavagrawal18/worldwise-server
+        - name: Publish Image to docker hub
+          run: docker push keshavagrawal18/worldwise-server:latest
+
+    deploy:
+      needs: build
+      runs-on: self-hosted
+      steps:
+        - name: Pull image from docker hub
+          run: docker pull keshavagrawal18/worldwise-server:latest
+        - name: Run Docker Container
+          run: docker run -d -p 8000:8000 --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD}}' keshavagrawal18/worldwise-server

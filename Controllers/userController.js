@@ -42,7 +42,6 @@ const createNewUser = (req, res) => {
                     password: hash,
                   });
 
-                  console.log(user);
                   user
                     .save()
                     .then(() => {
@@ -75,7 +74,6 @@ const getUserLogin = (req, res) => {
       res.status(404).send();
     } else {
       const hash = user[0].password;
-      // console.log(hash);
 
       bcrypt.compare(password, hash, function (err, result) {
         if (err) {
@@ -84,7 +82,6 @@ const getUserLogin = (req, res) => {
           if (result === false) {
             res.status(401).send("Unauthorized response");
           } else {
-            console.log("login verified");
             res.send({
               username: user[0].username,
               userId: user[0].userId,
