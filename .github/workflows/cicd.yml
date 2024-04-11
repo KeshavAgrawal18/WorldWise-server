@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker image
-        run: docker build -t keshavagrawal18/worldwise-server
+        run: docker build -t worldwise-server
       - name: Publish Image to docker hub
         run: docker push keshavagrawal18/worldwise-server:latest
 
