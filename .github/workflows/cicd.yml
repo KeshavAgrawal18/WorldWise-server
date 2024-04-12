@@ -29,4 +29,4 @@ jobs:
       - name: Run Docker Container
         run: |
           docker rm -f node-js-app-container || true
-          docker run -d -p 8000:8000 --name node-js-app-container -e MONGO_URL=${{ secrets.MONGO_URL}} keshavagrawal18/worldwise-server
+          docker run -d -p 8000:8000 --name node-js-app-container -e MONGODB_URL=${{ secrets.MONGO_URL}} keshavagrawal18/worldwise-server
