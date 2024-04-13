@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: Pull image from docker hub
         run: docker pull keshavagrawal18/worldwise-server:latest
+      - name: Delete old container
+        run: docker rm -f node-js-app-container
       - name: Run Docker Container
-        run: |
-          docker rm -f node-js-app-container || true
-          docker run -d -p 8000:8000 --name node-js-app-container -e MONGODB_URL=${{ secrets.MONGO_URL}} keshavagrawal18/worldwise-server
+        run: docker run -d -p 8000:8000 --name node-js-app-container -e MONGODB_URL=${{ secrets.MONGO_URL}} keshavagrawal18/worldwise-server
