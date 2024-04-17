@@ -17,9 +17,7 @@ mongooseConnect();
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
-app.get("/test", (req, res) => {
-  res.send("server is connected");
-});
+
 app.use("/", router);
 
 app.listen(PORT, (req, res) => {

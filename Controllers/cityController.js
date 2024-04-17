@@ -67,13 +67,27 @@ const createNewCity = (req, res) => {
 };
 
 const deleteCity = (req, res) => {
-  const { id, cityName } = req.body;
-  City.deleteOne({ id: id, cityName: cityName })
-    .then(function () {
-      res.status(200).json("city deleted successfully");
+  const { id, cityName, userId } = req.body;
+
+  City.find({ userId })
+    .then((results) => {
+      if (results.length === 0) {
+        res.send("user doesn't exist");
+      } else {
+        City.updateOne(
+          { userId: userId },
+          { $pull: { data: { id: id, cityName: cityName } } }
+        )
+          .then((data) => {
+            res.status(200).json("city deleted successfully");
+          })
+          .catch(function (error) {
+            console.log(error); // Failure
+          });
+      }
     })
-    .catch(function (error) {
-      console.log(error); // Failure
+    .catch((error) => {
+      console.log(error);
     });
 };
 
